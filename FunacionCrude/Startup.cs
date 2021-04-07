@@ -1,6 +1,8 @@
+using FunacionCrude.Models.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +26,8 @@ namespace FunacionCrude
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            var conexion = Configuration["ConnectionStrings:conexion_sqlserver"];
+            services.AddDbContext<DbContextFundacion>(options => options.UseSqlServer(conexion));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,7 +54,7 @@ namespace FunacionCrude
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Padrinos}/{action=Index}/{id?}");
             });
         }
     }
