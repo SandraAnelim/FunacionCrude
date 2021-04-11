@@ -23,7 +23,7 @@ namespace FunacionCrude.ViewModels
 
         public string Profesion { get; set; }
                   
-        public int UsuarioId { get; set; }
+        public int Usuario { get; set; }
         public string Descripcion { get; set; }
     }
 }

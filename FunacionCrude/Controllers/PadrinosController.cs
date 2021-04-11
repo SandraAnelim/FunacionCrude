@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FunacionCrude.Models.DAL;
 using FunacionCrude.Models.Entities;
+using FunacionCrude.ViewModels;
 
 namespace FunacionCrude.Controllers
 {
@@ -22,7 +23,30 @@ namespace FunacionCrude.Controllers
         // GET: Padrinos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Padrinos.ToListAsync());
+            await using (_context)
+            {
+                IEnumerable<PadrinoModel> listaPadrinos =
+                    (from padrino in _context.Padrinos join
+                     usuario in _context.Usuarios
+                     on padrino.UsuarioId equals usuario.UsuarioId
+                     select new PadrinoModel
+                     {
+                         PadrinoId = padrino.PadrinoId,
+                         Nombre = padrino.Nombre,
+                         Correo = padrino.Correo,
+                         Contraseña = padrino.Contraseña,
+                         Edad = padrino.Edad,
+                         Profesion = padrino.Profesion,
+                         Descripcion = padrino.Descripcion,
+                         Usuario = usuario.UsuarioId
+
+                     }).ToList();
+                return View(listaPadrinos);
+                               
+
+            }
+
+            //return View(await _context.Padrinos.ToListAsync());
         }/*Vista princital, metodo asincronico y tareas*/
 
         // GET: Padrinos/Details/5

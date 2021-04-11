@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FunacionCrude.Models.Entities.Padrino>
+﻿@model IEnumerable<FunacionCrude.ViewModels.PadrinoModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.Profesion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsuarioId)
+                @Html.DisplayNameFor(model => model.Usuario)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Descripcion)
@@ -56,7 +56,7 @@
                     @Html.DisplayFor(modelItem => item.Profesion)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.UsuarioId)
+                    @Html.DisplayFor(modelItem => item.Usuario)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Descripcion)
