@@ -23,7 +23,7 @@ namespace FunacionCrude.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.Padrinos.ToListAsync());
-        }
+        }/*Vista princital, metodo asincronico y tareas*/
 
         // GET: Padrinos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -56,12 +56,21 @@ namespace FunacionCrude.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PadrinoId,Nombre,Correo,Contraseña,Edad,Profesion,UsuarioId,Descripcion")] Padrino padrino)
         {
+            var padrinoaTemp = await _context.Padrinos.FirstOrDefaultAsync(p => p.Correo == padrino.Correo);
+
             if (ModelState.IsValid)
             {
-                _context.Add(padrino);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(padrinoaTemp == null)
+                {
+                    _context.Add(padrino);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
+            
+                ViewData["error"] = "El correo se encuentra registrado";
+            
             return View(padrino);
         }
 

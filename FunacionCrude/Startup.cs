@@ -28,6 +28,7 @@ namespace FunacionCrude
             services.AddControllersWithViews();
             var conexion = Configuration["ConnectionStrings:conexion_sqlserver"];
             services.AddDbContext<DbContextFundacion>(options => options.UseSqlServer(conexion));
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

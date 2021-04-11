@@ -1,10 +1,10 @@
-﻿@model FunacionCrude.Models.Entities.Padrino
+﻿@model FunacionCrude.Models.Entities.Padrino 
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Crear</h1>
 
 <h4>Padrino</h4>
 <hr />
@@ -21,6 +21,7 @@
                 <label asp-for="Correo" class="control-label"></label>
                 <input asp-for="Correo" class="form-control" />
                 <span asp-validation-for="Correo" class="text-danger"></span>
+                <span class="text-danger">@ViewBag.error</span>
             </div>
             <div class="form-group">
                 <label asp-for="Contraseña" class="control-label"></label>
@@ -55,7 +56,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regresar</a>
 </div>
 
 @section Scripts {
