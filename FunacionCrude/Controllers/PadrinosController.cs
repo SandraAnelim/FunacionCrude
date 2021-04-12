@@ -30,32 +30,7 @@ namespace FunacionCrude.Controllers
         {
            return View(await _padrinoBusiness.ObtenerListaPadrinos());
         }
-        /*await using (_context) ;
-        {
-            IEnumerable<PadrinoModel> listaPadrinos =
-                (from padrino in _context.Padrinos join
-                 usuario in _context.Usuarios
-                 on padrino.UsuarioId equals usuario.UsuarioId
-                 select new PadrinoModel
-                 {
-                     PadrinoId = padrino.PadrinoId,
-                     Nombre = padrino.Nombre,
-                     Correo = padrino.Correo,
-                     Contraseña = padrino.Contraseña,
-                     Edad = padrino.Edad,
-                     Profesion = padrino.Profesion,
-                     Descripcion = padrino.Descripcion,
-                     Usuario = usuario.UsuarioId
-
-                 }).ToList();
-            return View(listaPadrinos);
-
-
-        }*/
-
-        //
-        ///*Vista princital, metodo asincronico y tareas*/
-
+        
         // GET: Padrinos/Details/5
          public async Task<IActionResult> Details(int? id)
         {
@@ -64,7 +39,7 @@ namespace FunacionCrude.Controllers
                 return NotFound();
             }
 
-            var padrino = await _padrinoBusiness.ObtenerEmpleadoPorId(id.Value);
+            var padrino = await _padrinoBusiness.ObtenerPadrinoPorId(id.Value);
             if (padrino == null)
             {
                 return NotFound();
@@ -76,9 +51,10 @@ namespace FunacionCrude.Controllers
         // GET: Padrinos/Create
         public IActionResult Create()
         {
+            ViewData["listaUsuarios"] = new SelectList(_padrinoBusiness.ObtenerListaUsuarios(), "UsuarioId", "Rol");
             return View();
         }
-        /*
+
 
         // POST: Padrinos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -87,23 +63,29 @@ namespace FunacionCrude.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PadrinoId,Nombre,Correo,Contraseña,Edad,Profesion,UsuarioId,Descripcion")] Padrino padrino)
         {
-            var padrinoaTemp = await _context.Padrinos.FirstOrDefaultAsync(p => p.Correo == padrino.Correo);
-
             if (ModelState.IsValid)
             {
-                if(padrinoaTemp == null)
+                var padrinoTemp =  await _padrinoBusiness.ObtenerPadrinoPorCorreo(padrino.Correo);
+
+                if (padrinoTemp == null)
                 {
-                    _context.Add(padrino);
-                    await _context.SaveChangesAsync();
+                    await _padrinoBusiness.GuardarPadrino(padrino);
                     return RedirectToAction(nameof(Index));
                 }
-                
             }
-            
-                ViewData["error"] = "El correo se encuentra registrado";
-            
+
+
+            if (padrino.UsuarioId == 0)
+                ViewData["errorUsuario"] = "Seleccione un usuario";
+
+            ViewData["errorDoc"] = "Se encuentra registrado un empleado con este documento";
+
+            ViewData["listaUsuarios"] = new SelectList(_padrinoBusiness.ObtenerListaUsuarios(), "UsuarioId", "Rol");
+
             return View(padrino);
+            
         }
+        
 
         // GET: Padrinos/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -113,13 +95,14 @@ namespace FunacionCrude.Controllers
                 return NotFound();
             }
 
-            var padrino = await _context.Padrinos.FindAsync(id);
+            var padrino = await _padrinoBusiness.ObtenerPadrinoPorId(id.Value);
             if (padrino == null)
             {
                 return NotFound();
             }
             return View(padrino);
         }
+      
 
         // POST: Padrinos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -132,32 +115,17 @@ namespace FunacionCrude.Controllers
             {
                 return NotFound();
             }
-
-
-
-            if (ModelState.IsValid)
+            var padrinoTemp = await _padrinoBusiness.ObtenerPadrinoPorCorreo(padrino.Correo);
+            if (padrinoTemp == null || (padrinoTemp.PadrinoId==padrino.PadrinoId))
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(padrino);
-                    await _context.SaveChangesAsync();
+                    await _padrinoBusiness.EditarPadrino(padrino);
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!PadrinoExists(padrino.PadrinoId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
             return View(padrino);
         }
-
         // GET: Padrinos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -166,30 +134,19 @@ namespace FunacionCrude.Controllers
                 return NotFound();
             }
 
-            var padrino = await _context.Padrinos
-                .FirstOrDefaultAsync(m => m.PadrinoId == id);
+            var padrino = await _padrinoBusiness.ObtenerPadrinoPorId(id.Value);
+            await _padrinoBusiness.EliminarPadrino(padrino);
             if (padrino == null)
             {
                 return NotFound();
             }
+                     
 
-            return View(padrino);
-        }
-
-        // POST: Padrinos/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var padrino = await _context.Padrinos.FindAsync(id);
-            _context.Padrinos.Remove(padrino);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+
+            
         }
 
-        private bool PadrinoExists(int id)
-        {
-            return _context.Padrinos.Any(e => e.PadrinoId == id);
-        }*/
+       
     }
 }

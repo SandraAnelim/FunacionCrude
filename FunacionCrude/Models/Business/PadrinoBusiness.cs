@@ -1,6 +1,7 @@
 ﻿using FunacionCrude.Models.Abstract;
 using FunacionCrude.Models.DAL;
 using FunacionCrude.Models.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,75 @@ namespace FunacionCrude.Models.Business
 
         }
 
-        public async Task<Padrino> ObtenerEmpleadoPorId(int id)
+        public async Task<Padrino> ObtenerPadrinoPorId(int id)
         {
             return (await _context.Padrinos.FirstOrDefaultAsync(m => m.PadrinoId == id));
 
         }
+        public async Task<Padrino> ObtenerPadrinoPorCorreo(string correo)
+        {
+            return (await _context.Padrinos.AsNoTracking().FirstOrDefaultAsync(m => m.Correo == correo));
+
+        }
+
+        
+       
+           
+
+
+
+        public IEnumerable<Usuario> ObtenerListaUsuarios()
+        {
+            return (_context.Usuarios.ToList());
+        }
+
+         public async Task GuardarPadrino(Padrino padrino)
+         {
+            try
+            {
+                _context.Add(padrino);
+                await _context.SaveChangesAsync();
+            
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+        }
+
+        public async Task EditarPadrino(Padrino padrino)
+        {
+            try
+            {
+                _context.Update(padrino);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+        }
+        public async Task EliminarPadrino(Padrino padrino)
+        {
+            try
+            {
+                _context.Remove(padrino);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+        }
+
     }
 }
