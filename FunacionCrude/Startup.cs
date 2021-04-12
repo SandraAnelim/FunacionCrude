@@ -32,6 +32,7 @@ namespace FunacionCrude
             services.AddDbContext<DbContextFundacion>(options => options.UseSqlServer(conexion));
 
             services.AddScoped<IPadrinoBusiness, PadrinoBusiness>();
+            services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
 
 
             services.AddRazorPages().AddRazorRuntimeCompilation();

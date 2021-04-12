@@ -12,13 +12,13 @@ namespace FunacionCrude.Models.Abstract
         Task<Padrino> ObtenerPadrinoPorId(int id);
         IEnumerable<Usuario> ObtenerListaUsuarios();
 
+        Task EliminarPadrino(Padrino padrino);
+
         Task<Padrino> ObtenerPadrinoPorCorreo(string correo);
 
         Task GuardarPadrino(Padrino padrino);
 
         Task EditarPadrino(Padrino padrino);
-        Task EliminarPadrino(Padrino padrino);
-
 
     }
 }
