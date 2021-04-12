@@ -3,14 +3,16 @@ using FunacionCrude.Models.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunacionCrude.Migrations
 {
     [DbContext(typeof(DbContextFundacion))]
-    partial class DbContextFundacionModelSnapshot : ModelSnapshot
+    [Migration("20210412073256_RolId a tio Stering")]
+    partial class RolIdatioStering
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

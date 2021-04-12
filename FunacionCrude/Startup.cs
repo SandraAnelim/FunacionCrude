@@ -1,3 +1,5 @@
+using FunacionCrude.Models.Abstract;
+using FunacionCrude.Models.Business;
 using FunacionCrude.Models.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +30,10 @@ namespace FunacionCrude
             services.AddControllersWithViews();
             var conexion = Configuration["ConnectionStrings:conexion_sqlserver"];
             services.AddDbContext<DbContextFundacion>(options => options.UseSqlServer(conexion));
+
+            services.AddScoped<IPadrinoBusiness, PadrinoBusiness>();
+
+
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

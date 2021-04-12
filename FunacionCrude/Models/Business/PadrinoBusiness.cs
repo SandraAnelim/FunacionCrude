@@ -1,4 +1,5 @@
-﻿using FunacionCrude.Models.DAL;
+﻿using FunacionCrude.Models.Abstract;
+using FunacionCrude.Models.DAL;
 using FunacionCrude.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FunacionCrude.Models.Business
 {
-    public class PadrinoBusiness
+    public class PadrinoBusiness : IPadrinoBusiness
     {
         private readonly DbContextFundacion _context;
 
@@ -21,7 +22,13 @@ namespace FunacionCrude.Models.Business
         {
             return (await _context.Padrinos.Include("Usuario").ToListAsync());
 
-           
+
+        }
+
+        public async Task<Padrino> ObtenerEmpleadoPorId(int id)
+        {
+            return (await _context.Padrinos.FirstOrDefaultAsync(m => m.PadrinoId == id));
+
         }
     }
 }

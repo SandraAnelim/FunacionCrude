@@ -9,6 +9,7 @@ namespace FunacionCrude.Models.Entities
 {
     public class Padrino
     {
+        [Key]
         public int PadrinoId { get; set; }
 
         public string Nombre { get; set; }
@@ -26,7 +27,7 @@ namespace FunacionCrude.Models.Entities
         [Required(ErrorMessage = "Se requiere  UsuarioId")]
         public int UsuarioId { get; set; }
 
-        [Column ("Descripcion", TypeName="nvarchar(250)")]
+        public virtual Usuario Usuario { get; set; }       
         public string Descripcion { get; set; }
 
 

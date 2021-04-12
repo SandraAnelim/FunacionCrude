@@ -9,17 +9,18 @@ using FunacionCrude.Models.DAL;
 using FunacionCrude.Models.Entities;
 using FunacionCrude.ViewModels;
 using FunacionCrude.Models.Business;
+using FunacionCrude.Models.Abstract;
 
 namespace FunacionCrude.Controllers
 {
     public class PadrinosController : Controller
     {
         
-        private readonly DbContextFundacion _context;
+        private readonly IPadrinoBusiness _padrinoBusiness;
 
-         public PadrinosController(DbContextFundacion context)
+         public PadrinosController(IPadrinoBusiness padrinoBusiness)
         {
-            _context = context;
+            _padrinoBusiness = padrinoBusiness;
         }
 
         // GET: Padrinos
@@ -27,46 +28,43 @@ namespace FunacionCrude.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var padrinos = await _context.Padrinos.Include("Usuario").ToListAsync();
+           return View(await _padrinoBusiness.ObtenerListaPadrinos());
+        }
+        /*await using (_context) ;
+        {
+            IEnumerable<PadrinoModel> listaPadrinos =
+                (from padrino in _context.Padrinos join
+                 usuario in _context.Usuarios
+                 on padrino.UsuarioId equals usuario.UsuarioId
+                 select new PadrinoModel
+                 {
+                     PadrinoId = padrino.PadrinoId,
+                     Nombre = padrino.Nombre,
+                     Correo = padrino.Correo,
+                     Contraseña = padrino.Contraseña,
+                     Edad = padrino.Edad,
+                     Profesion = padrino.Profesion,
+                     Descripcion = padrino.Descripcion,
+                     Usuario = usuario.UsuarioId
 
-                return View(padrinos);
+                 }).ToList();
+            return View(listaPadrinos);
 
-            /*await using (_context) ;
-            {
-                IEnumerable<PadrinoModel> listaPadrinos =
-                    (from padrino in _context.Padrinos join
-                     usuario in _context.Usuarios
-                     on padrino.UsuarioId equals usuario.UsuarioId
-                     select new PadrinoModel
-                     {
-                         PadrinoId = padrino.PadrinoId,
-                         Nombre = padrino.Nombre,
-                         Correo = padrino.Correo,
-                         Contraseña = padrino.Contraseña,
-                         Edad = padrino.Edad,
-                         Profesion = padrino.Profesion,
-                         Descripcion = padrino.Descripcion,
-                         Usuario = usuario.UsuarioId
 
-                     }).ToList();
-                return View(listaPadrinos);
-                               
+        }*/
 
-            }*/
-
-            //
-        }///*Vista princital, metodo asincronico y tareas*/
+        //
+        ///*Vista princital, metodo asincronico y tareas*/
 
         // GET: Padrinos/Details/5
-        // public async Task<IActionResult> Details(int? id)
-        /*{
+         public async Task<IActionResult> Details(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var padrino = await _context.Padrinos
-                .FirstOrDefaultAsync(m => m.PadrinoId == id);
+            var padrino = await _padrinoBusiness.ObtenerEmpleadoPorId(id.Value);
             if (padrino == null)
             {
                 return NotFound();
@@ -80,6 +78,7 @@ namespace FunacionCrude.Controllers
         {
             return View();
         }
+        /*
 
         // POST: Padrinos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

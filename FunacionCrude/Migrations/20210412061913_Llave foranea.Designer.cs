@@ -3,14 +3,16 @@ using FunacionCrude.Models.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FunacionCrude.Migrations
 {
     [DbContext(typeof(DbContextFundacion))]
-    partial class DbContextFundacionModelSnapshot : ModelSnapshot
+    [Migration("20210412061913_Llave foranea")]
+    partial class Llaveforanea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,8 @@ namespace FunacionCrude.Migrations
                     b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Rol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
 
                     b.HasKey("UsuarioId");
 
