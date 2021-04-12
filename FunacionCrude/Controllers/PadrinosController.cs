@@ -8,22 +8,30 @@ using Microsoft.EntityFrameworkCore;
 using FunacionCrude.Models.DAL;
 using FunacionCrude.Models.Entities;
 using FunacionCrude.ViewModels;
+using FunacionCrude.Models.Business;
 
 namespace FunacionCrude.Controllers
 {
     public class PadrinosController : Controller
     {
+        
         private readonly DbContextFundacion _context;
 
-        public PadrinosController(DbContextFundacion context)
+         public PadrinosController(DbContextFundacion context)
         {
             _context = context;
         }
 
         // GET: Padrinos
+
+
         public async Task<IActionResult> Index()
         {
-            await using (_context)
+            var padrinos = await _context.Padrinos.Include("Usuario").ToListAsync();
+
+                return View(padrinos);
+
+            /*await using (_context) ;
             {
                 IEnumerable<PadrinoModel> listaPadrinos =
                     (from padrino in _context.Padrinos join
@@ -44,14 +52,14 @@ namespace FunacionCrude.Controllers
                 return View(listaPadrinos);
                                
 
-            }
+            }*/
 
-            //return View(await _context.Padrinos.ToListAsync());
-        }/*Vista princital, metodo asincronico y tareas*/
+            //
+        }///*Vista princital, metodo asincronico y tareas*/
 
         // GET: Padrinos/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
+        // public async Task<IActionResult> Details(int? id)
+        /*{
             if (id == null)
             {
                 return NotFound();
@@ -183,6 +191,6 @@ namespace FunacionCrude.Controllers
         private bool PadrinoExists(int id)
         {
             return _context.Padrinos.Any(e => e.PadrinoId == id);
-        }
+        }*/
     }
 }
