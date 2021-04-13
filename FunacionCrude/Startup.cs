@@ -30,11 +30,7 @@ namespace FunacionCrude
             services.AddControllersWithViews();
             var conexion = Configuration["ConnectionStrings:conexion_sqlserver"];
             services.AddDbContext<DbContextFundacion>(options => options.UseSqlServer(conexion));
-
             services.AddScoped<IPadrinoBusiness, PadrinoBusiness>();
-            services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
-
-
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

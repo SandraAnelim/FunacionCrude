@@ -30,7 +30,7 @@ namespace FunacionCrude.Controllers
         {
            return View(await _padrinoBusiness.ObtenerListaPadrinos());
         }
-        
+       
         // GET: Padrinos/Details/5
          public async Task<IActionResult> Details(int? id)
         {
@@ -51,7 +51,7 @@ namespace FunacionCrude.Controllers
         // GET: Padrinos/Create
         public IActionResult Create()
         {
-            ViewData["listaUsuarios"] = new SelectList(_padrinoBusiness.ObtenerListaUsuarios(), "UsuarioId", "Rol");
+            /*ViewData["listaUsuarios"] = new SelectList(_padrinoBusiness.ObtenerListaUsuarios(), "UsuarioId", "Rol");*/
             return View();
         }
 
@@ -61,7 +61,7 @@ namespace FunacionCrude.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PadrinoId,Nombre,Correo,Contraseña,Edad,Profesion,UsuarioId,Descripcion")] Padrino padrino)
+        public async Task<IActionResult> Create([Bind("PadrinoId,Nombre,Correo,Edad,Profesion,Descripcion")] Padrino padrino)
         {
             if (ModelState.IsValid)
             {
@@ -75,12 +75,10 @@ namespace FunacionCrude.Controllers
             }
 
 
-            if (padrino.UsuarioId == 0)
-                ViewData["errorUsuario"] = "Seleccione un usuario";
-
+           
             ViewData["errorDoc"] = "Se encuentra registrado un empleado con este documento";
 
-            ViewData["listaUsuarios"] = new SelectList(_padrinoBusiness.ObtenerListaUsuarios(), "UsuarioId", "Rol");
+            
 
             return View(padrino);
             
@@ -109,7 +107,7 @@ namespace FunacionCrude.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PadrinoId,Nombre,Correo,Contraseña,Edad,Profesion,UsuarioId,Descripcion")] Padrino padrino)
+        public async Task<IActionResult> Edit(int id, [Bind("PadrinoId,Nombre,Correo,Edad,Profesion,Descripcion")] Padrino padrino)
         {
             if (id != padrino.PadrinoId)
             {

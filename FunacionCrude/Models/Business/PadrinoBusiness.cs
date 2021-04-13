@@ -21,7 +21,7 @@ namespace FunacionCrude.Models.Business
 
         public async Task<IEnumerable<Padrino>> ObtenerListaPadrinos()
         {
-            return (await _context.Padrinos.Include("Usuario").ToListAsync());
+            return (await _context.Padrinos.ToListAsync());
 
 
         }
@@ -36,17 +36,8 @@ namespace FunacionCrude.Models.Business
             return (await _context.Padrinos.AsNoTracking().FirstOrDefaultAsync(m => m.Correo == correo));
 
         }
-
-        
-       
-           
-
-
-
-        public IEnumerable<Usuario> ObtenerListaUsuarios()
-        {
-            return (_context.Usuarios.ToList());
-        }
+          
+                      
 
          public async Task GuardarPadrino(Padrino padrino)
          {

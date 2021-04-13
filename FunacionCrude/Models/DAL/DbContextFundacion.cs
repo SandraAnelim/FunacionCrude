@@ -13,8 +13,9 @@ namespace FunacionCrude.Models.DAL
         {
 
         }
-        public DbSet<Usuario> Usuarios { get; set; }
+        
         public DbSet<Padrino> Padrinos { get; set; }
+       
 
     }
 }

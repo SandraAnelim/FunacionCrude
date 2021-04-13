@@ -18,16 +18,12 @@ namespace FunacionCrude.Models.Entities
         public string Correo { get; set; }
 
         [Required(ErrorMessage = "Se requiere  contraseña")]
-        public string Contraseña { get; set; }
-
+        
         public int Edad { get; set; }
 
         public string Profesion { get; set; }
 
-        [Required(ErrorMessage = "Se requiere  UsuarioId")]
-        public int UsuarioId { get; set; }
-
-        public virtual Usuario Usuario { get; set; }       
+             
         public string Descripcion { get; set; }
 
 

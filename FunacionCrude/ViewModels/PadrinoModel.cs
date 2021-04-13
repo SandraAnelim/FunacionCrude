@@ -12,18 +12,13 @@ namespace FunacionCrude.ViewModels
         public int PadrinoId { get; set; }
 
         public string Nombre { get; set; }
-
-      
+     
         public string Correo { get; set; }
-
-        
-        public string Contraseña { get; set; }
-
+            
         public int Edad { get; set; }
 
         public string Profesion { get; set; }
                   
-        public int Usuario { get; set; }
         public string Descripcion { get; set; }
     }
 }
